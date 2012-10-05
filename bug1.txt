@@ -1,0 +1,42 @@
+[issa:missionary_cannibal]> python3 missionary_cannibal.py  
+m1 m3 m2 c3 c2 c1
+~~B~~~~~~~~~~~~~~
+    R i v e r
+~~~~~~~~~~~~~~~~~
+
+
+Available to choose from: m1, m3, m2, c3, c2, c1
+Choose your move. m3
+{'m1': 0, 'm3': 1, 'm2': 0, 'c3': 0, 'c2': 0, 'c1': 0}
+
+m1 m2 c3 c2 c1
+~~~~~~~~~~~~~~~~~
+    R i v e r
+~~B~~~~~~~~~~~~~~
+m3
+
+Available to choose from: m3
+Choose your move. m2
+Cannot move m2; the boat is on the other side!
+
+
+m1 m2 c3 c2 c1
+~~~~~~~~~~~~~~~~~
+    R i v e r
+~~B~~~~~~~~~~~~~~
+m3
+
+Available to choose from: m3
+Choose your move. m3
+{'m1': 0, 'm3': 0, 'm2': 0, 'c3': 0, 'c2': 0, 'c1': 0}
+{'m1': 0, 'm3': 0, 'm2': 1, 'c3': 0, 'c2': 0, 'c1': 0}
+
+m1 m3 c3 c2 c1
+~~~~~~~~~~~~~~~~~
+    R i v e r
+~~B~~~~~~~~~~~~~~
+m2
+
+Available to choose from: m2
+Choose your move. 
+
