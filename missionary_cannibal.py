@@ -20,21 +20,21 @@ boat = 0
 def alterbit(bit):
     return abs(bit - 1)
 
-def missionary_on_side(bit):
-    return max(people_dict["m1"], people_dict["m2"], people_dict["m3"])
+def missionary_on_side(bit, d):
+    return max(d["m1"], d["m2"], d["m3"])
 
-def missionary_number(bit):
+def missionary_number(bit, d):
     count = 0
-    if people_dict["m1"] == bit: count += 1
-    if people_dict["m2"] == bit: count += 1
-    if people_dict["m3"] == bit: count += 1
+    if d["m1"] == bit: count += 1
+    if d["m2"] == bit: count += 1
+    if d["m3"] == bit: count += 1
     return count
 
-def cannibal_number(bit):
+def cannibal_number(bit, d):
     count = 0
-    if people_dict["c1"] == bit: count += 1
-    if people_dict["c2"] == bit: count += 1
-    if people_dict["c3"] == bit: count += 1
+    if d["c1"] == bit: count += 1
+    if d["c2"] == bit: count += 1
+    if d["c3"] == bit: count += 1
     return count
 
 def turn():
@@ -70,8 +70,8 @@ def turn():
         if i in move:
             temp_people_dict[i] = alterbit(temp_people_dict[i])
     for side in [0,1]:
-        if missionary_on_side(side):
-            if cannibal_number(side) >= missionary_number(side):
+        if missionary_on_side(side, temp_people_dict):
+            if cannibal_number(side, temp_people_dict) >= missionary_number(side, temp_people_dict):
                 print("Cannibals may not outnumber missionaries on side " + str(side) + "!")
                 return 0
     # perform the move for real
