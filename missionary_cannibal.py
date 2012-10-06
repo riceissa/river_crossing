@@ -82,12 +82,10 @@ def turn():
         return 0
     # check that when the move is completed, there are not more cannibals
     # than missionaries on each side
-    #print("DEBUG0: " + str(people_dict))
     temp_people_dict = dict(people_dict)
     for i in people_names:
         if i in move:
             temp_people_dict[i] = alterbit(temp_people_dict[i])
-            #print("DEBUG0.5: " + str(people_dict))
     for side in [0,1]:
         if missionary_on_side(side, temp_people_dict):
             if cannibal_number(side, temp_people_dict) > missionary_number(side, temp_people_dict):
@@ -97,8 +95,6 @@ def turn():
                     print("Cannibals may not outnumber missionaries on bottom side!")
                 return 0
     # perform the move for real
-    #print("DEBUG1: got here")
-    #print("DEBUG2: " + str(people_dict))
     counter = 0
     for i in people_names:
         if i in move:
@@ -131,5 +127,4 @@ turn_number = 0
 while not (sum(people_dict[i] for i in people_names) == 6):
     turn()
     turn_number += 1
-    #print("DEBUG3: " + str(people_dict))
 print("Congratulations! You won in " + str(turn_number) + " turns. (Minimum 11)")
