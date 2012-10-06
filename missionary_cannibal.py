@@ -21,7 +21,24 @@ def alterbit(bit):
     return abs(bit - 1)
 
 def missionary_on_side(bit, d):
-    return max(d["m1"], d["m2"], d["m3"])
+    # min == 0 implies there is a missionary on side 0
+    # min == 1 implies there is no missionary on side 0
+    # max == 0 implies there is no missionary on side 1
+    # max == 1 implies there is a missionary on side 1
+    if bit:
+    # is there a missionary on side 1?
+        if max(d["m1"], d["m2"], d["m3"]):
+        # so there is a missionary on side 1; return yes
+            return 1
+        else:
+            return 0
+    else:
+    # is there a missionary on side 0?
+        if  0 == min(d["m1"], d["m2"], d["m3"]):
+        # so there is a missionary on side 0; return yes
+            return 1
+        else:
+            return 0
 
 def missionary_number(bit, d):
     count = 0
