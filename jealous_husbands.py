@@ -2,57 +2,14 @@
 
 # See https://en.wikipedia.org/wiki/Missionaries_and_cannibals_problem
 
-# todo: - jealous husbands or c-m
-        #- enter solution matrix t check solution to either puzzle
-        #- interactive mode to play
-            #+ graphic display
+# to-do: enter solution matrix to check solution to either puzzle
 
-m1 = 0
-m2 = 0
-m3 = 0
-c1 = 0
-c2 = 0
-c3 = 0
 people_dict = {"h1": 0, "h2": 0, "h3": 0, "w1": 0, "w2": 0, "w3": 0}
 people_names = list(people_dict.keys())
 boat = 0
 
 def alterbit(bit):
     return abs(bit - 1)
-
-def missionary_on_side(bit, d):
-    # min == 0 implies there is a missionary on side 0
-    # min == 1 implies there is no missionary on side 0
-    # max == 0 implies there is no missionary on side 1
-    # max == 1 implies there is a missionary on side 1
-    if bit:
-    # is there a missionary on side 1?
-        if max(d["m1"], d["m2"], d["m3"]):
-        # so there is a missionary on side 1; return yes
-            return 1
-        else:
-            return 0
-    else:
-    # is there a missionary on side 0?
-        if  0 == min(d["m1"], d["m2"], d["m3"]):
-        # so there is a missionary on side 0; return yes
-            return 1
-        else:
-            return 0
-
-def missionary_number(bit, d):
-    count = 0
-    if d["m1"] == bit: count += 1
-    if d["m2"] == bit: count += 1
-    if d["m3"] == bit: count += 1
-    return count
-
-def cannibal_number(bit, d):
-    count = 0
-    if d["c1"] == bit: count += 1
-    if d["c2"] == bit: count += 1
-    if d["c3"] == bit: count += 1
-    return count
 
 def jealousy(d):
     for i in [1,2,3]:
@@ -92,8 +49,12 @@ def turn():
     # check that when the move is completed, there are not more cannibals
     # than missionaries on each side
     temp_people_dict = dict(people_dict)
+    # dry-run to see if there are any jealous husbands
+    for i in people_names:
+        if i in move:
+            temp_people_dict[i] = alterbit(temp_people_dict[i])
     if jealousy(temp_people_dict):
-        print("A husband cannot leave his wife unattended with another man.")
+        print("A wife cannot be left with another man unless her husband is present.")
         return 0
     # perform the move for real
     counter = 0
@@ -102,7 +63,7 @@ def turn():
             people_dict[i] = alterbit(people_dict[i])
             counter += 1
     if counter != 0:
-        boat = alterbit(boat)
+        boat = alterbit(boat) # don't move the boat if no one crossed
 
 def draw(position_dict):
     global boat
