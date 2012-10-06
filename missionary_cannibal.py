@@ -88,15 +88,19 @@ def turn():
             temp_people_dict[i] = alterbit(temp_people_dict[i])
     for side in [0,1]:
         if missionary_on_side(side, temp_people_dict):
-            if cannibal_number(side, temp_people_dict) >= missionary_number(side, temp_people_dict):
+            if cannibal_number(side, temp_people_dict) > missionary_number(side, temp_people_dict):
                 print("Cannibals may not outnumber missionaries on side " + str(side) + "!")
-                return 0
+                #return 0
+                break
     # perform the move for real
+    counter = 0
     for i in people_names:
         if i in move:
             people_dict[i] = alterbit(people_dict[i])
+            counter += 1
     #print(people_dict)
-    boat = alterbit(boat)
+    if counter != 0:
+        boat = alterbit(boat)
 
 def draw(position_dict):
     global boat
