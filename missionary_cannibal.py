@@ -37,15 +37,13 @@ def turn():
                 boat_other = 1
                 print("Cannot move " + i + "; the boat is on the other side!\n")
                 return 0
-    #if boat_other:
-        #turn()
     counter = 0
     for i in people_names:
         if i in move:
             counter += 1
     if counter > 2:
         print("Cannot move more than two!\n")
-        turn()
+        return 0
     for i in people_names:
         if i in move:
             people_dict[i] = alterbit(people_dict[i])
@@ -74,3 +72,4 @@ def draw(position_dict):
 
 while not (sum(people_dict[i] for i in people_names) == 6):
     turn()
+print("Congratulations you won!")
