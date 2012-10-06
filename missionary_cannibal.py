@@ -20,6 +20,23 @@ boat = 0
 def alterbit(bit):
     return abs(bit - 1)
 
+def missionary_on_side(bit):
+    return max(people_dict["m1"], people_dict["m2"], people_dict["m3"])
+
+def missionary_number(bit):
+    count = 0
+    if people_dict["m1"] == bit: count += 1
+    if people_dict["m2"] == bit: count += 1
+    if people_dict["m3"] == bit: count += 1
+    return count
+
+def cannibal_number(bit):
+    count = 0
+    if people_dict["c1"] == bit: count += 1
+    if people_dict["c2"] == bit: count += 1
+    if people_dict["c3"] == bit: count += 1
+    return count
+
 def turn():
     draw(people_dict)
     global boat
@@ -30,6 +47,7 @@ def turn():
             good_people.append(i)
     print("Available to choose from: " + ', '.join(good_people))
     move = input("Choose your move. ")
+    # check that people on a different side than the boat are not moved
     boat_other = 0
     for i in people_names:
         if i in move:
@@ -37,6 +55,7 @@ def turn():
                 boat_other = 1
                 print("Cannot move " + i + "; the boat is on the other side!\n")
                 return 0
+    # check that not more than two people are moved
     counter = 0
     for i in people_names:
         if i in move:
@@ -44,10 +63,22 @@ def turn():
     if counter > 2:
         print("Cannot move more than two!\n")
         return 0
+    # check that when the move is completed, there are not more cannibals
+    # than missionaries on each side
+    temp_people_dict = people_dict
+    for i in people_names:
+        if i in move:
+            temp_people_dict[i] = alterbit(temp_people_dict[i])
+    for side in [0,1]:
+        if missionary_on_side(side):
+            if cannibal_number(side) >= missionary_number(side):
+                print("Cannibals may not outnumber missionaries on side " + str(side) + "!")
+                return 0
+    # perform the move for real
     for i in people_names:
         if i in move:
             people_dict[i] = alterbit(people_dict[i])
-    print(people_dict)
+    #print(people_dict)
     boat = alterbit(boat)
 
 def draw(position_dict):
