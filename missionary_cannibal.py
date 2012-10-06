@@ -23,18 +23,23 @@ def alterbit(bit):
 def turn():
     draw(people_dict)
     global boat
+    # people on the same side as the boat are "good"
     good_people = []
     for i in people_names:
         if people_dict[i] == boat:
             good_people.append(i)
     print("Available to choose from: " + ', '.join(good_people))
     move = input("Choose your move. ")
-    counter = 0
+    boat_other = 0
     for i in people_names:
         if i in move:
             if not (i in good_people):
+                boat_other = 1
                 print("Cannot move " + i + "; the boat is on the other side!\n")
-                turn()
+                return 0
+    #if boat_other:
+        #turn()
+    counter = 0
     for i in people_names:
         if i in move:
             counter += 1
