@@ -6,7 +6,7 @@
 
 ## Example
 
-Below is an example from the "missionaries and cannibals" puzzle. `m`*n* for *n* = 1, 2, 3 represents the missionaries and similarly for cannibals. The top (above the river) represents the people who have not yet crossed, and similarly for the bottom. The `B` shows the location of the boat (The `Available to choose from` text also gives the same information.).
+Below is an example from the "missionaries and cannibals" puzzle. `mn` for *n* = 1, 2, 3 represents the missionaries and similarly for cannibals. The top (above the river) represents the people who have not yet crossed, and similarly for the bottom. The `B` shows the location of the boat (The `Available to choose from` text also gives the same information.).
 
     m1 m3 m2 c3 c2 c1
     ~~B~~~~~~~~~~~~~~
