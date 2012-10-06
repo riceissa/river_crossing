@@ -70,7 +70,7 @@ def turn():
         if i in move:
             if not (i in good_people):
                 boat_other = 1
-                print("Cannot move " + i + "; the boat is on the other side!\n")
+                print("Cannot move " + i + "; the boat is on the wrong side!\n")
                 return 0
     # check that not more than two people are moved
     counter = 0
@@ -82,20 +82,23 @@ def turn():
         return 0
     # check that when the move is completed, there are not more cannibals
     # than missionaries on each side
-    print("DEBUG0: " + str(people_dict))
+    #print("DEBUG0: " + str(people_dict))
     temp_people_dict = dict(people_dict)
     for i in people_names:
         if i in move:
             temp_people_dict[i] = alterbit(temp_people_dict[i])
-            print("DEBUG0.5: " + str(people_dict))
+            #print("DEBUG0.5: " + str(people_dict))
     for side in [0,1]:
         if missionary_on_side(side, temp_people_dict):
             if cannibal_number(side, temp_people_dict) > missionary_number(side, temp_people_dict):
-                print("Cannibals may not outnumber missionaries on side " + str(side) + "!")
+                if side == 0:
+                    print("Cannibals may not outnumber missionaries on top side!")
+                else:
+                    print("Cannibals may not outnumber missionaries on bottom side!")
                 return 0
     # perform the move for real
-    print("DEBUG1: got here")
-    print("DEBUG2: " + str(people_dict))
+    #print("DEBUG1: got here")
+    #print("DEBUG2: " + str(people_dict))
     counter = 0
     for i in people_names:
         if i in move:
@@ -124,7 +127,9 @@ def draw(position_dict):
 ~~B~~~~~~~~~~~~~~''')
     print(' '.join(crossed) + "\n")
 
+turn_number = 0
 while not (sum(people_dict[i] for i in people_names) == 6):
     turn()
-    print("DEBUG3: " + str(people_dict))
-print("Congratulations you won!")
+    turn_number += 1
+    #print("DEBUG3: " + str(people_dict))
+print("Congratulations! You won in " + str(turn_number) + " turns. (Minimum 11)")
