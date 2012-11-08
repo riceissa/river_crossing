@@ -7,18 +7,25 @@
         #- interactive mode to play
             #+ graphic display
 
-m1 = 0
-m2 = 0
-m3 = 0
-c1 = 0
-c2 = 0
-c3 = 0
-people_dict = {"m1": m1, "m2": m2, "m3": m3, "c1": c1, "c2": c2, "c3": c3}
-people_names = list(people_dict.keys())
-boat = 0
+side0 = ["m1", "m2", "m3", "c1", "c2", "c3"]
+side1 = []
+boat0 = ["boat"]
+boat1 = []
 
-def alterbit(bit):
-    return abs(bit - 1)
+def move(obj):
+    '''move an object to the other side of the river'''
+    if obj in boat0:
+        # the object is the boat on side0, so move to side1
+        boat1.append(boat0.pop(boat0.index(obj)))
+    elif obj in boat1:
+        # the object is the boat on side1, so move to side0
+        boat0.append(boat1.pop(boat1.index(obj)))
+    elif obj in side0:
+        # the object is a person on side0 so move to side1
+        side1.append(side0.pop(side0.index(obj)))
+    else:
+        # the object is a person on side1 so move to side0
+        side0.append(side1.pop(side1.index(obj)))
 
 def missionary_on_side(bit, d):
     # min == 0 implies there is a missionary on side 0
@@ -55,36 +62,32 @@ def cannibal_number(bit, d):
     return count
 
 def turn():
-    draw(people_dict)
-    global boat
+    draw(side0, side1)
     # people on the same side as the boat are "good"
     good_people = []
-    for i in people_names:
-        if people_dict[i] == boat:
-            good_people.append(i)
+    if "boat" in boat0:
+        good_people = side0
+    else:
+        good_people = side1
     print("Available to choose from: " + ', '.join(good_people))
-    move = input("Choose your move. ")
+    player_move = input("Choose your move: ")
     # check that people on a different side than the boat are not moved
-    boat_other = 0
-    for i in people_names:
-        if i in move:
+    for i in side0.extend(side1):
+        if i in player_move:
             if not (i in good_people):
-                boat_other = 1
                 print("Cannot move " + i + "; the boat is on the wrong side!\n")
-                return 0
     # check that not more than two people are moved
     counter = 0
-    for i in people_names:
-        if i in move:
+    for i in side0.extend(side1):
+        if i in player_move:
             counter += 1
     if counter > 2:
         print("Cannot move more than two!\n")
-        return 0
     # check that when the move is completed, there are not more cannibals
     # than missionaries on each side
     temp_people_dict = dict(people_dict)
     for i in people_names:
-        if i in move:
+        if i in player_move:
             temp_people_dict[i] = alterbit(temp_people_dict[i])
     for side in [0,1]:
         if missionary_on_side(side, temp_people_dict):
@@ -95,25 +98,14 @@ def turn():
                     print("Cannibals may not outnumber missionaries on bottom side!")
                 return 0
     # perform the move for real
-    counter = 0
-    for i in people_names:
-        if i in move:
-            people_dict[i] = alterbit(people_dict[i])
-            counter += 1
-    if counter != 0:
-        boat = alterbit(boat)
+    for i in good_people:
+        if i in player_move:
+            move(i)
+    move("boat")
 
-def draw(position_dict):
-    global boat
-    not_crossed = []
-    crossed = []
-    for i in people_names:
-        if position_dict[i] == 0:
-            not_crossed.append(i)
-        else:
-            crossed.append(i)
-    print("\n" + ' '.join(not_crossed))
-    if not boat:
+def draw(top, bottom):
+    print("\n" + ' '.join(top))
+    if "boat" in top:
         print('''~~B~~~~~~~~~~~~~~
     R i v e r
 ~~~~~~~~~~~~~~~~~''')
@@ -121,7 +113,7 @@ def draw(position_dict):
         print('''~~~~~~~~~~~~~~~~~
     R i v e r
 ~~B~~~~~~~~~~~~~~''')
-    print(' '.join(crossed) + "\n")
+    print(' '.join(bottom) + "\n")
 
 turn_number = 0
 while not (sum(people_dict[i] for i in people_names) == 6):
