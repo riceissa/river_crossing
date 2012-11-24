@@ -64,11 +64,14 @@ def turn():
                     print("Cannibals may not outnumber missionaries on bottom side!")
                 print("DEBUG0")
                 return 0
+                print("DEBUG1")
     # perform the move for real
+    print("DEBUG3")
     for i in good_people:
         if i in player_move:
             move(i, side0, side1)
     moveboat()
+    print("DEBUG4")
 
 def draw(top, bottom):
     print("\n" + ' '.join(top))
