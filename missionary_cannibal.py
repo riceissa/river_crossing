@@ -62,6 +62,7 @@ def turn():
                     print("Cannibals may not outnumber missionaries on top side!")
                 else:
                     print("Cannibals may not outnumber missionaries on bottom side!")
+                print("DEBUG0")
                 return 0
     # perform the move for real
     for i in good_people:
